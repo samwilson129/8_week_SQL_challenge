@@ -37,9 +37,3 @@ select s.customer_id,sum(case when m.product_name="sushi" then price*20 else pri
 -- In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 select s.customer_id,sum(case when s.order_date between me.join_date and date_add(me.join_date,interval 6 day) then m.price*20 when m.product_name="sushi" then m.price*20 else m.price*10 end ) as customer_points from sales s join menu m on s.product_id=m.product_id join members me on s.customer_id=me.customer_id where order_date<"2021-02-01" group by s.customer_id;
 
--- BONUS QUESTIONS (involve recreating output given in the website)
-
--- join all things
-select s.customer_id,s.order_date,m.product_name,m.price,case when me.join_date<=s.order_date then "Y" else "N" end as member from sales s join menu m on s.product_id=m.product_id left join members me on me.customer_id=s.customer_id;
-
--- rank all things
